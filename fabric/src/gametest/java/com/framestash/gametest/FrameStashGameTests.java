@@ -8,7 +8,6 @@ import com.framestash.gui.Menus;
 import com.framestash.gui.StashMenu;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.gametest.framework.GameTest;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -218,8 +217,7 @@ public class FrameStashGameTests implements FabricGameTest {
         BlockPos locked = new BlockPos(2, 1, 2);
         h.setBlock(locked, Blocks.CHEST);
         ItemStack lockSource = new ItemStack(Items.CHEST);
-        lockSource.set(DataComponents.LOCK, new LockCode(ItemPredicate.Builder.item()
-                .of(h.getLevel().registryAccess().lookupOrThrow(Registries.ITEM), Items.DIAMOND).build()));
+        lockSource.set(DataComponents.LOCK, new LockCode("Secret Key"));
         h.getLevel().getBlockEntity(h.absolutePos(locked)).applyComponentsFromItemStack(lockSource);
         frame(h, locked, Direction.NORTH, Items.STONE, false);
 
