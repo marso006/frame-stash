@@ -46,6 +46,14 @@ fabricApi {
     }
 }
 
+// Fabric API before 1.21.4 has no client gametest API: `-PnoClientTests` skips those classes
+// so the in-world tests can still run on older versions.
+if (project.hasProperty('noClientTests')) {
+    sourceSets.gametest.java {
+        exclude '**/KeybindClientTest.java', '**/ScreenshotShoot.java'
+    }
+}
+
 loom {
     runs {
         client { ideConfigGenerated true }

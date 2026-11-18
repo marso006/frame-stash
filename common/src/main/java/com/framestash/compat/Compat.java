@@ -51,6 +51,25 @@ public final class Compat {
         return player.serverLevel();
     }
 
+    /** Hides an icon's own extra tooltip lines (attributes, enchantments, map ids, ...), keeping name and lore. */
+    public static void hideExtraTooltip(net.minecraft.world.item.ItemStack stack) {
+        net.minecraft.world.item.component.TooltipDisplay display = net.minecraft.world.item.component.TooltipDisplay.DEFAULT
+                .withHidden(DataComponents.ATTRIBUTE_MODIFIERS, true)
+                .withHidden(DataComponents.ENCHANTMENTS, true)
+                .withHidden(DataComponents.STORED_ENCHANTMENTS, true)
+                .withHidden(DataComponents.POTION_CONTENTS, true)
+                .withHidden(DataComponents.CONTAINER, true)
+                .withHidden(DataComponents.BUNDLE_CONTENTS, true)
+                .withHidden(DataComponents.MAP_ID, true);
+        stack.set(DataComponents.TOOLTIP_DISPLAY, display);
+    }
+
+    /** Hides an icon's tooltip completely (menu filler panes). */
+    public static void hideTooltip(net.minecraft.world.item.ItemStack stack) {
+        stack.set(DataComponents.TOOLTIP_DISPLAY,
+                new net.minecraft.world.item.component.TooltipDisplay(true, new java.util.LinkedHashSet<>()));
+    }
+
     /** Plays a sound that only this player hears, at their position. */
     public static void playTo(ServerPlayer player, SoundEvent sound, float volume, float pitch) {
         playTo(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), volume, pitch);
