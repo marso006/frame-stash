@@ -40,7 +40,7 @@ final class Icons {
 
     /** A pane with no tooltip at all, used to fill empty slots. */
     static ItemStack filler() {
-        ItemStack stack = new ItemStack(Items.BLACK_STAINED_GLASS_PANE);
+        ItemStack stack = new ItemStack(com.framestash.compat.Compat.fillerItem());
         com.framestash.compat.Compat.hideTooltip(stack);
         return stack;
     }
