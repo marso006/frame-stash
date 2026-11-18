@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
  * The few calls that differ between Minecraft versions. Each version branch has its own copy of this
  * class; everything else in common is the same on every branch.
  *
- * <p>This copy: Minecraft 1.21.6 - 1.21.8 (ResourceLocation, integer permission levels, lock read from components).
+ * <p>This copy: Minecraft 1.21.5 (ResourceLocation, integer permission levels, lock read from components).
  */
 public final class Compat {
     private Compat() {}
@@ -44,6 +44,11 @@ public final class Compat {
     public static boolean isLocked(BaseContainerBlockEntity container) {
         LockCode lock = container.collectComponents().get(DataComponents.LOCK);
         return lock != null && !lock.equals(LockCode.NO_LOCK);
+    }
+
+    /** The server level the player is in. */
+    public static net.minecraft.server.level.ServerLevel level(ServerPlayer player) {
+        return player.serverLevel();
     }
 
     /** Plays a sound that only this player hears, at their position. */

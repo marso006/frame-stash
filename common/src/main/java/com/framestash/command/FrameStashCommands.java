@@ -67,7 +67,7 @@ public final class FrameStashCommands {
     private static int info(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         ServerPlayer player = ctx.getSource().getPlayerOrException();
         FrameStashConfig config = FrameStashMod.config();
-        List<LabelledContainer> containers = LabelScanner.scan(player.level(), Actions.origin(player), config);
+        List<LabelledContainer> containers = LabelScanner.scan(com.framestash.compat.Compat.level(player), Actions.origin(player), config);
         CommandSourceStack source = ctx.getSource();
 
         if (containers.isEmpty()) {
@@ -99,7 +99,7 @@ public final class FrameStashCommands {
         BlockPos pos = container.pos();
         int distance = (int) Math.round(Math.sqrt(container.distanceSq()));
         MutableComponent line = Component.literal("- ")
-                .append(player.level().getBlockState(pos).getBlock().getName())
+                .append(com.framestash.compat.Compat.level(player).getBlockState(pos).getBlock().getName())
                 .append(Component.literal(" at " + pos.getX() + " " + pos.getY() + " " + pos.getZ()
                         + ", " + distance + "m: ").withStyle(ChatFormatting.GRAY));
         boolean any = appendItems(line, container.primary(), false);

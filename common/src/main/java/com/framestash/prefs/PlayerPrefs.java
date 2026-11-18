@@ -66,13 +66,13 @@ public final class PlayerPrefs {
     }
 
     private static synchronized Prefs get(ServerPlayer player) {
-        ensureLoaded(player.level().getServer());
+        ensureLoaded(com.framestash.compat.Compat.level(player).getServer());
         Prefs p = prefs.get(player.getUUID().toString());
         return p != null ? p : new Prefs();
     }
 
     private static synchronized void update(ServerPlayer player, java.util.function.Consumer<Prefs> change) {
-        MinecraftServer server = player.level().getServer();
+        MinecraftServer server = com.framestash.compat.Compat.level(player).getServer();
         ensureLoaded(server);
         Prefs p = prefs.computeIfAbsent(player.getUUID().toString(), k -> new Prefs());
         change.accept(p);
