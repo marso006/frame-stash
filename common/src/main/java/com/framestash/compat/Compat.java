@@ -10,13 +10,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.LockCode;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 
 /**
  * The few calls that differ between Minecraft versions. Each version branch has its own copy of this
  * class; everything else in common is the same on every branch.
  *
- * <p>This copy: Minecraft 1.21.9 - 1.21.10 (ResourceLocation, integer permission levels).
+ * <p>This copy: Minecraft 1.21.6 - 1.21.8 (ResourceLocation, integer permission levels, lock read from components).
  */
 public final class Compat {
     private Compat() {}
@@ -35,6 +38,12 @@ public final class Compat {
     /** Whether the source has at least the classic permission level (0 = everyone ... 4 = owner). */
     public static boolean hasLevel(CommandSourceStack source, int level) {
         return source.hasPermission(level);
+    }
+
+    /** Whether the container has a vanilla lock (the "lock" component). */
+    public static boolean isLocked(BaseContainerBlockEntity container) {
+        LockCode lock = container.collectComponents().get(DataComponents.LOCK);
+        return lock != null && !lock.equals(LockCode.NO_LOCK);
     }
 
     /** Plays a sound that only this player hears, at their position. */

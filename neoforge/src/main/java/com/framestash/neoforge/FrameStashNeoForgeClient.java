@@ -2,7 +2,6 @@ package com.framestash.neoforge;
 
 import com.framestash.FrameStashMod;
 import com.framestash.client.FrameStashClient;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -22,9 +21,7 @@ public final class FrameStashNeoForgeClient {
     }
 
     private static void onRegisterKeys(RegisterKeyMappingsEvent event) {
-        KeyMapping.Category category = new KeyMapping.Category(com.framestash.compat.Compat.id("main"));
-        event.registerCategory(category);
-        FrameStashClient.createKeys(category).forEach(event::register);
+        FrameStashClient.createKeys().forEach(event::register);
     }
 
     private static void onClientTick(ClientTickEvent.Post event) {
@@ -32,6 +29,6 @@ public final class FrameStashNeoForgeClient {
     }
 
     private static void onScreenKey(ScreenEvent.KeyPressed.Post event) {
-        FrameStashClient.onScreenKey(Minecraft.getInstance(), event.getScreen(), event.getKeyEvent());
+        FrameStashClient.onScreenKey(Minecraft.getInstance(), event.getScreen(), event.getKeyCode(), event.getScanCode());
     }
 }

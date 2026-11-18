@@ -9,7 +9,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;
 
@@ -34,12 +33,21 @@ public final class FrameStashClient {
 
     private FrameStashClient() {}
 
-    /** Creates the key mappings in the given category. Each loader registers them its own way. */
-    public static List<KeyMapping> createKeys(KeyMapping.Category category) {
+    /** Translation key of the keybind category. */
+    public static final String CATEGORY = "key.category.frame_stash.main";
+
+    /** Creates the key mappings. Each loader registers them its own way. */
+    public static List<KeyMapping> createKeys() {
+        String category = CATEGORY;
         stash = new KeyMapping("key.frame_stash.stash", InputConstants.KEY_G, category);
         restock = new KeyMapping("key.frame_stash.restock", InputConstants.KEY_H, category);
         menu = new KeyMapping("key.frame_stash.menu", InputConstants.UNKNOWN.getValue(), category);
         return List.of(stash, restock, menu);
+    }
+
+    /** The mappings created by {@link #createKeys}, or none before that. */
+    public static List<KeyMapping> keys() {
+        return stash == null ? List.of() : List.of(stash, restock, menu);
     }
 
     /** Called every client tick: handles key presses while no screen is open. */
@@ -54,13 +62,13 @@ public final class FrameStashClient {
      * Called after a key press inside a screen, so Stash and Restock also work with your inventory or
      * a chest open (quick stack). Ignored in the creative inventory and while typing in a text box.
      */
-    public static void onScreenKey(Minecraft mc, Screen screen, KeyEvent key) {
+    public static void onScreenKey(Minecraft mc, Screen screen, int keyCode, int scanCode) {
         if (stash == null || mc.player == null) return;
         if (!(screen instanceof AbstractContainerScreen<?>) || screen instanceof CreativeModeInventoryScreen) return;
         if (screen.getFocused() instanceof EditBox) return;
-        if (stash.matches(key)) {
+        if (stash.matches(keyCode, scanCode)) {
             send(mc, "stash");
-        } else if (restock.matches(key)) {
+        } else if (restock.matches(keyCode, scanCode)) {
             send(mc, "restock");
         }
     }
