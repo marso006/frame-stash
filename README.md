@@ -32,6 +32,18 @@ Minecraft 1.21.10 · Fabric and NeoForge · MIT licence · [How to test it yours
 
 Every click is cancelled on the server, so icons can't be taken and nothing can be moved through the menu.
 
+## Keybinds (optional client install)
+
+Players who also install the mod on their client get keybinds, under Controls → Frame Stash:
+
+| Key | Action |
+| --- | --- |
+| G | Stash. Works in the world and with your inventory or a chest open |
+| H | Restock |
+| unbound | Open the menu |
+
+A key press just sends the command, so there are no custom packets. Vanilla clients are unaffected, and on a server without the mod the keys show a short notice.
+
 ## Commands
 
 | Command | Who (default) | What |
@@ -65,7 +77,7 @@ Allowed container blocks come from the block tag `frame_stash:containers`. Data 
 
 ## Compatibility
 
-- **Vanilla clients:** no client code, no packets, no registries. All text is literal, so clients without the mod see it correctly.
+- **Vanilla clients:** no packets, no registries, no required client code. All text is literal, so clients without the mod see it correctly. The client part (keybinds) is optional.
 - **Locked containers** (vanilla lock component) are always skipped. **Spawn protection and the world border** are always respected.
 - **Claim mods, Fabric:** checked through the bundled [Common Protection API](https://github.com/Patbox/common-protection-api), which Flan, GOML, Open Parties and Claims and others implement.
 - **Claim mods, NeoForge:** checked by posting a simulated empty-hand `PlayerInteractEvent.RightClickBlock` and reading whether a mod cancelled it. That covers FTB Chunks, Open Parties and Claims and others. If a mod reacts badly to the probe, set `protectionCheck = false`.
@@ -89,6 +101,7 @@ Requires a JDK 21 or newer; Gradle downloads a Java 21 toolchain if needed.
 ./gradlew build                     # compiles, runs unit tests, jars in fabric/build/libs and neoforge/build/libs
 ./gradlew :fabric:test              # planner and config tests, including the 50-run item-totals test
 ./gradlew :fabric:runGameTest       # in-world tests: real chests, frames and a mock player (11 tests)
+./gradlew :fabric:runClientGameTest # presses the real G/H keys in a game window (add -Pshoot to retake screenshots)
 ./gradlew :fabric:runServer         # dedicated Fabric server (fabric/run-server)
 ./gradlew :neoforge:runServer       # dedicated NeoForge server (neoforge/run-server)
 ./gradlew :fabric:runClient         # dev client

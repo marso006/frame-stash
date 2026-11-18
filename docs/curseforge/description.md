@@ -4,7 +4,7 @@
 
 Frame Stash turns the item frames you already hang on your storage into real labels. Come home from a mining trip, type `/stash`, and every item in your inventory goes to the chest whose frame shows it. Need more torches? `/restock` tops your stacks back up from the same chests.
 
-It runs **only on the server**. Players join with an unmodded client and still get everything, including the menu.
+It runs **on the server**. Players join with an unmodded client and still get everything, including the menu. Install it on your client too and you also get **keybinds**: press **G** to stash, even with a chest open.
 
 ![Frame Stash in action](https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/demo.gif)
 
@@ -78,6 +78,18 @@ A short summary on the action bar ("Stashed 705 items into 14 containers"), a pa
 | `/framestash info` | everyone | List labelled containers in range and what each accepts |
 | `/framestash reload` | operators | Reload the config |
 
+### Keybinds (optional client install)
+
+If you also put Frame Stash in your own `mods` folder, you get keybinds. Change them under **Options → Controls → Key Binds → Frame Stash**.
+
+| Key | Action |
+| --- | --- |
+| **G** | Stash. Works in the world **and with your inventory or a chest open** |
+| **H** | Restock |
+| *(unbound)* | Open the menu |
+
+The keys simply run the commands, so they work on any server with Frame Stash, and players without the client install lose nothing.
+
 Optional, off by default: **sneak and right-click** a labelled container with an empty hand to stash.
 
 ## Configuration
@@ -106,7 +118,7 @@ Server owners and modpack makers can add more container blocks through the block
 ## Compatibility
 
 - **Minecraft 1.21.10** on **Fabric** (needs Fabric API) and **NeoForge**
-- **Server-side only.** Install it on the server. Players don't need it. It also works in singleplayer.
+- **Required on the server, optional on the client.** Players without it can use everything through commands and the menu. Players with it also get keybinds. It works in singleplayer too.
 - **Claim and protection mods:** a container is skipped if you couldn't open it yourself. On Fabric this goes through the bundled Common Protection API; on NeoForge through the standard block-interaction event.
 - **Locked containers, spawn protection and the world border** are always respected.
 - **Bigger stack mods:** stack limits always come from the container and the item, never a fixed 64, so mods and data packs that raise stack sizes just work.
@@ -115,7 +127,7 @@ Server owners and modpack makers can add more container blocks through the block
 ## FAQ
 
 **Do players need to install anything?**
-No. Everything, including the menu, works with an unmodded client.
+No. Everything, including the menu, works with an unmodded client. Installing it on the client only adds keybinds (G to stash, H to restock).
 
 **Will it put things into my locked chests?**
 No. Locked chests, chests with a block on top, protected chests and chests in unloaded chunks are skipped.

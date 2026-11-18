@@ -10,6 +10,7 @@ There are three ways to test, from quickest to most realistic. A test datapack (
    - **NeoForge:** NeoForge 21.10.64 or newer. Then add `frame-stash-neoforge-1.21.10-1.0.0.jar`.
 3. Create a new world with **Allow Commands** on. Under **Data Packs**, drag in `docs/testing/frame-stash-test.zip`.
 4. In game: `/function framestash_test:help`, then follow the steps it prints.
+5. **Keybinds:** because the mod is installed on your client too, press **G** instead of typing `/stash`, also with your inventory or a chest open. Press **H** to restock. Rebind them under Options → Controls → Key Binds → Frame Stash.
 
 ## 2. Dedicated server with a vanilla client (the mod's main promise)
 
@@ -28,7 +29,8 @@ You can also join with the dev client: `./gradlew :fabric:runClient`, then Multi
 ./gradlew build                     # unit tests + in-world GameTests (Fabric)
 ./gradlew :fabric:test              # planner, config, big-stack and item-totals tests
 ./gradlew :fabric:runGameTest       # 11 in-world tests with real chests, frames and a mock player
-./gradlew :fabric:runClientGameTest # retakes the mod-page screenshots into docs/raw (opens a window)
+./gradlew :fabric:runClientGameTest # presses the real G and H keys in a game window and checks the chests
+./gradlew :fabric:runClientGameTest -Pshoot # same, plus retakes the mod-page screenshots into docs/raw
 python docs/tools/make_images.py    # turns docs/raw into the edited images in docs/images
 ```
 
@@ -57,6 +59,12 @@ Tick these on **both** loaders before uploading.
 - [ ] `/framestash` opens the menu; Stash and Restock buttons work; icons can't be taken out
 - [ ] `/framestash info` lists the test room and shows "skipped: locked" and "skipped: blocked"
 - [ ] With `includeHotbar = true` in `config/frame_stash.toml` and `/framestash reload`, Stash also takes hotbar items
+
+**Keybinds** (mod installed on the client too)
+- [ ] G stashes in the world, and with the inventory or a chest open
+- [ ] H restocks
+- [ ] Typing a "g" in the creative search box or chat does **not** stash
+- [ ] Joining a server without Frame Stash and pressing G shows "Frame Stash isn't available on this server"
 
 **Server and clients**
 - [ ] Fabric server + vanilla client: join, `/stash` works, menu works

@@ -54,7 +54,11 @@ public class ScreenshotShoot implements FabricClientGameTest {
 
     @Override
     public void runTest(ClientGameTestContext context) {
-        out = Paths.get(System.getProperty("framestash.shots", "../../docs/raw")).toAbsolutePath().normalize();
+        String target = System.getProperty("framestash.shots");
+        if (target == null) {
+            return; // only runs with -Pshoot
+        }
+        out = Paths.get(target).toAbsolutePath().normalize();
         try {
             Files.createDirectories(out);
         } catch (Exception e) {

@@ -13,7 +13,8 @@
   },
   "environment": "*",
   "entrypoints": {
-    "main": ["com.framestash.fabric.FrameStashFabric"]
+    "main": ["com.framestash.fabric.FrameStashFabric"],
+    "client": ["com.framestash.fabric.FrameStashFabricClient"]
   },
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",

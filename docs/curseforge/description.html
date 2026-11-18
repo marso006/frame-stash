@@ -1,7 +1,7 @@
 <p><img alt="Frame Stash" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/banner.png" /></p>
 <p><strong>Label your chests with item frames. Put everything away with one command.</strong></p>
 <p>Frame Stash turns the item frames you already hang on your storage into real labels. Come home from a mining trip, type <code>/stash</code>, and every item in your inventory goes to the chest whose frame shows it. Need more torches? <code>/restock</code> tops your stacks back up from the same chests.</p>
-<p>It runs <strong>only on the server</strong>. Players join with an unmodded client and still get everything, including the menu.</p>
+<p>It runs <strong>on the server</strong>. Players join with an unmodded client and still get everything, including the menu. Install it on your client too and you also get <strong>keybinds</strong>: press <strong>G</strong> to stash, even with a chest open.</p>
 <p><img alt="Frame Stash in action" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/demo.gif" /></p>
 <hr />
 <h2>How it works</h2>
@@ -82,6 +82,31 @@
 </tr>
 </tbody>
 </table>
+<h3>Keybinds (optional client install)</h3>
+<p>If you also put Frame Stash in your own <code>mods</code> folder, you get keybinds. Change them under <strong>Options → Controls → Key Binds → Frame Stash</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>G</strong></td>
+<td>Stash. Works in the world <strong>and with your inventory or a chest open</strong></td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td>Restock</td>
+</tr>
+<tr>
+<td><em>(unbound)</em></td>
+<td>Open the menu</td>
+</tr>
+</tbody>
+</table>
+<p>The keys simply run the commands, so they work on any server with Frame Stash, and players without the client install lose nothing.</p>
 <p>Optional, off by default: <strong>sneak and right-click</strong> a labelled container with an empty hand to stash.</p>
 <h2>Configuration</h2>
 <p><code>config/frame_stash.toml</code> is created on first start. Run <code>/framestash reload</code> after editing.</p>
@@ -161,7 +186,7 @@
 <h2>Compatibility</h2>
 <ul>
 <li><strong>Minecraft 1.21.10</strong> on <strong>Fabric</strong> (needs Fabric API) and <strong>NeoForge</strong></li>
-<li><strong>Server-side only.</strong> Install it on the server. Players don't need it. It also works in singleplayer.</li>
+<li><strong>Required on the server, optional on the client.</strong> Players without it can use everything through commands and the menu. Players with it also get keybinds. It works in singleplayer too.</li>
 <li><strong>Claim and protection mods:</strong> a container is skipped if you couldn't open it yourself. On Fabric this goes through the bundled Common Protection API; on NeoForge through the standard block-interaction event.</li>
 <li><strong>Locked containers, spawn protection and the world border</strong> are always respected.</li>
 <li><strong>Bigger stack mods:</strong> stack limits always come from the container and the item, never a fixed 64, so mods and data packs that raise stack sizes just work.</li>
@@ -169,7 +194,7 @@
 </ul>
 <h2>FAQ</h2>
 <p><strong>Do players need to install anything?</strong>
-No. Everything, including the menu, works with an unmodded client.</p>
+No. Everything, including the menu, works with an unmodded client. Installing it on the client only adds keybinds (G to stash, H to restock).</p>
 <p><strong>Will it put things into my locked chests?</strong>
 No. Locked chests, chests with a block on top, protected chests and chests in unloaded chunks are skipped.</p>
 <p><strong>What are glow item frames for?</strong>

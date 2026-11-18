@@ -50,8 +50,11 @@ loom {
     runs {
         client { ideConfigGenerated true }
         server { ideConfigGenerated true; runDir 'run-server' }
-        matching { it.name == 'clientGameTest' }.configureEach {
-            vmArg "-Dframestash.shots=${rootProject.file('docs/raw').absolutePath}"
+        // `./gradlew :fabric:runClientGameTest -Pshoot` also retakes the mod-page screenshots.
+        if (project.hasProperty('shoot')) {
+            matching { it.name == 'clientGameTest' }.configureEach {
+                vmArg "-Dframestash.shots=${rootProject.file('docs/raw').absolutePath}"
+            }
         }
     }
 }
