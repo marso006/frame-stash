@@ -77,10 +77,10 @@ public final class FrameStashMod {
                 || !player.getMainHandItem().isEmpty() || player.isSpectator()) {
             return false;
         }
-        if (!player.level().getBlockState(pos).is(LabelScanner.CONTAINERS)) {
+        if (!com.framestash.compat.Compat.level(player).getBlockState(pos).is(LabelScanner.CONTAINERS)) {
             return false;
         }
-        boolean labelled = LabelScanner.scan(player.level(), Actions.origin(player), cfg).stream()
+        boolean labelled = LabelScanner.scan(com.framestash.compat.Compat.level(player), Actions.origin(player), cfg).stream()
                 .anyMatch(c -> c.contains(pos));
         if (!labelled) {
             return false;
