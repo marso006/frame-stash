@@ -303,42 +303,7 @@ def gif():
     print("wrote", OUT / "demo.gif")
 
 
-def icon():
-    """Original 32x32 pixel-art icon: a wooden frame holding a small chest, upscaled to 512 px."""
-    px = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
-    d = ImageDraw.Draw(px)
-    # Rounded dark tile background.
-    d.rounded_rectangle((0, 0, 31, 31), radius=6, fill=(38, 34, 48, 255))
-    # Frame: outer dark wood, inner light wood, leather backing.
-    d.rectangle((4, 4, 27, 27), fill=(96, 62, 34, 255))
-    d.rectangle((5, 5, 26, 26), fill=(171, 121, 71, 255))
-    d.rectangle((7, 7, 24, 24), fill=(120, 52, 36, 255))
-    d.rectangle((8, 8, 23, 23), fill=(150, 72, 48, 255))
-    # Chest inside the frame.
-    d.rectangle((10, 12, 21, 21), fill=(112, 70, 30, 255))
-    d.rectangle((11, 13, 20, 16), fill=(170, 110, 48, 255))
-    d.rectangle((11, 17, 20, 20), fill=(150, 95, 40, 255))
-    d.line((10, 16, 21, 16), fill=(70, 42, 18, 255))
-    d.rectangle((15, 15, 16, 18), fill=(220, 220, 225, 255))
-    # Gold arrow pointing down-left into the chest: the "stash" motion.
-    gold, shade = (255, 190, 70, 255), (196, 128, 30, 255)
-    for i in range(6):
-        px.putpixel((28 - i, 2 + i), gold)
-        px.putpixel((29 - i, 2 + i), shade)
-    for (x, y) in [(22, 4), (22, 5), (22, 6), (22, 7), (22, 8), (23, 8), (24, 8), (25, 8), (26, 8)]:
-        px.putpixel((x, y), gold)
-    # Frame highlights.
-    d.line((5, 5, 26, 5), fill=(205, 155, 98, 255))
-    d.line((5, 5, 5, 26), fill=(205, 155, 98, 255))
-    big = px.resize((512, 512), Image.NEAREST)
-    big.save(OUT / "icon.png")
-    px.resize((128, 128), Image.NEAREST).save(ROOT / "common" / "src" / "main" / "resources" / "assets"
-                                              / "frame_stash" / "icon.png")
-    print("wrote", OUT / "icon.png")
-
-
 if __name__ == "__main__":
-    (ROOT / "common" / "src" / "main" / "resources" / "assets" / "frame_stash").mkdir(parents=True, exist_ok=True)
     banner()
     how_it_works()
     wall()
@@ -347,4 +312,4 @@ if __name__ == "__main__":
     overflow()
     menu()
     gif()
-    icon()
+    # The logo and mod icon are drawn by make_logo.py.

@@ -1,3 +1,5 @@
+<img src="docs/images/logo.png" alt="Frame Stash logo" width="128" align="right">
+
 ![Frame Stash](docs/images/banner.png)
 
 # Frame Stash
