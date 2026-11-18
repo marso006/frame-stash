@@ -70,6 +70,16 @@ public final class Compat {
                 new net.minecraft.world.item.component.TooltipDisplay(true, new java.util.LinkedHashSet<>()));
     }
 
+    /** Shows a short message on the player's action bar. */
+    public static void overlay(net.minecraft.world.entity.player.Player player, net.minecraft.network.chat.Component message) {
+        player.displayClientMessage(message, true);
+    }
+
+    /** The item used for empty menu slots. */
+    public static Item fillerItem() {
+        return net.minecraft.world.item.Items.BLACK_STAINED_GLASS_PANE;
+    }
+
     /** Plays a sound that only this player hears, at their position. */
     public static void playTo(ServerPlayer player, SoundEvent sound, float volume, float pitch) {
         playTo(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), volume, pitch);
