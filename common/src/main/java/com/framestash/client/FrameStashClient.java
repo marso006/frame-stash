@@ -81,7 +81,7 @@ public final class FrameStashClient {
         lastSend = now;
         if (connection.getCommands().getRoot().getChild(command) == null) {
             // Server without Frame Stash, or the player lacks permission for this command.
-            mc.player.displayClientMessage(Component.literal("Frame Stash isn't available on this server"), true);
+            com.framestash.compat.Compat.overlay(mc.player, Component.literal("Frame Stash isn't available on this server"));
             return;
         }
         connection.sendCommand(command);
