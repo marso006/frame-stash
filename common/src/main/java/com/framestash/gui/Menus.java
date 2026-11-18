@@ -188,8 +188,8 @@ public final class Menus {
                 menu.set(i - start, containerIcon(player, container, config), (m, type, button) -> {
                     Feedback.highlight(m.player(), container.pos());
                     BlockPos pos = container.pos();
-                    m.player().displayClientMessage(Component.literal("Showing the way to " + pos.getX() + " "
-                            + pos.getY() + " " + pos.getZ()), true);
+                    com.framestash.compat.Compat.overlay(m.player(), Component.literal("Showing the way to " + pos.getX() + " "
+                            + pos.getY() + " " + pos.getZ()));
                     click(m.player());
                 });
             }
