@@ -2,9 +2,9 @@
 
 # Frame Stash
 
-Label chests with item frames, then quick stack, restock and overflow into them. Server-side; vanilla clients can join.
+Label chests with item frames, then press **G** to stash and **H** to restock.
 
-Minecraft 1.21.10 · Fabric and NeoForge · MIT licence · [How to test it yourself](TESTING.md)
+Fabric and NeoForge · MIT licence · [How to test it yourself](TESTING.md)
 
 ![Demo](docs/images/demo.gif)
 

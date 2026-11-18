@@ -11,9 +11,9 @@ authors = "${mod_author}"
 logoFile = "assets/frame_stash/icon.png"
 displayURL = "https://github.com/marso006/frame-stash"
 description = '''
-Label chests with item frames, then quick stack, restock and overflow into them. Server-side; vanilla clients can join.
+Label chests with item frames, then press G to stash and H to restock.
 '''
-# Server-only mod: clients never need it, so the server list must not flag a mismatch.
+# The client part (keybinds) is optional, so the server list must not flag a missing or different version.
 displayTest = "IGNORE_SERVER_VERSION"
 
 [[dependencies.${mod_id}]]

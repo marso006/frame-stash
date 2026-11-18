@@ -3,7 +3,7 @@
   "id": "${mod_id}",
   "version": "${version}",
   "name": "${mod_name}",
-  "description": "Label chests with item frames, then quick stack, restock and overflow into them. Server-side; vanilla clients can join.",
+  "description": "Label chests with item frames, then press G to stash and H to restock.",
   "authors": ["${mod_author}"],
   "license": "${mod_license}",
   "icon": "assets/frame_stash/icon.png",

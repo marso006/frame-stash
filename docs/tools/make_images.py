@@ -238,7 +238,7 @@ def menu():
     b = chest_rows(b, 6, 1.0)
     shadowed_paste(img, a, (110, 260))
     shadowed_paste(img, b, (W - 110 - b.width, 230))
-    badge(img, "/framestash", (110 + a.width // 2, 260 + a.height + 50))
+    badge(img, "Open with your menu key", (110 + a.width // 2, 260 + a.height + 50))
     badge(img, "Every container nearby, with its labels", (W - 110 - b.width // 2, 230 + b.height + 50))
     d = ImageDraw.Draw(img)
     f = font(28, bold=False)
@@ -246,8 +246,8 @@ def menu():
              "Click a container to get a trail to it"]
     for i, line in enumerate(lines):
         d.text((110, 640 + i * 44), "•  " + line, font=f, fill=SOFT, anchor="lm")
-    title_bar(img, "A menu that vanilla clients can use",
-              "Built from a normal chest screen, so nobody needs to install anything.", step=5)
+    title_bar(img, "The Frame Stash menu",
+              "Stash, restock, browse nearby containers and set your own preferences.", step=5)
     watermark(img)
     save(img, "5_menu.png")
 
@@ -259,7 +259,7 @@ def how_it_works():
     title_bar(img, "How it works")
     steps = [("1", "Hang a frame", "on a chest, barrel or shulker box"),
              ("2", "Put an item in it", "that item now lives there"),
-             ("3", "Press G", "everything goes home (or type /stash)")]
+             ("3", "Press G", "everything goes to its home")]
     d = ImageDraw.Draw(img)
     card_w, gap = 440, 40
     x = (W - (card_w * 3 + gap * 2)) // 2

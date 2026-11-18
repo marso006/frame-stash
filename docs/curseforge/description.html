@@ -64,7 +64,7 @@
 </ul>
 <h3>The Frame Stash menu</h3>
 <p><img alt="The Frame Stash menu" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/5_menu.png" /></p>
-<p>Open it with your menu key or <code>/framestash</code>:</p>
+<p>Open it with your <strong>menu key</strong> (set it once under Controls):</p>
 <ul>
 <li><strong>Stash</strong> and <strong>Restock</strong> buttons</li>
 <li><strong>Nearby containers:</strong> every labelled container around you, with its labels, how full it is, and a warning if it can't be used. Click one and a particle trail shows you the way.</li>
@@ -72,63 +72,20 @@
 </ul>
 <hr />
 <h2>Installing</h2>
-<table>
-<thead>
-<tr>
-<th>Where</th>
-<th>Needed?</th>
-<th>What you get</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Server</strong> (or singleplayer)</td>
-<td><strong>Required</strong></td>
-<td>Stashing, restocking, the menu</td>
-</tr>
-<tr>
-<td><strong>Your client</strong></td>
-<td>Recommended</td>
-<td>The <strong>G</strong> and <strong>H</strong> keybinds</td>
-</tr>
-</tbody>
-</table>
-<p>Fabric needs <a href="https://modrinth.com/mod/fabric-api">Fabric API</a>. NeoForge needs nothing else. Check the <strong>Files</strong> tab for the Minecraft versions each file supports.</p>
-<p><strong>Playing on a server where you don't have the mod installed?</strong> Everything still works through commands and the menu:</p>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Same as</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/stash</code></td>
-<td>G</td>
-</tr>
-<tr>
-<td><code>/restock</code></td>
-<td>H</td>
-</tr>
-<tr>
-<td><code>/framestash</code></td>
-<td>Menu key</td>
-</tr>
-<tr>
-<td><code>/framestash info</code></td>
-<td>Lists labelled containers nearby</td>
-</tr>
-</tbody>
-</table>
+<ol>
+<li>Drop Frame Stash into your <code>mods</code> folder. On Fabric, also add <a href="https://modrinth.com/mod/fabric-api">Fabric API</a>.</li>
+<li>Playing with friends? Add it to the multiplayer world's <code>mods</code> folder too.</li>
+<li>Start the game, hang some frames and press <strong>G</strong>.</li>
+</ol>
+<p>Check the <strong>Files</strong> tab for the Minecraft versions and loaders each file supports.</p>
 <hr />
-<h2>For server owners</h2>
+<h2>For multiplayer worlds</h2>
 <ul>
 <li><strong>Respects protection.</strong> Locked chests, claimed or protected areas, spawn protection and chests blocked by a block on top are skipped. Fabric claim mods are asked through the bundled Common Protection API, NeoForge ones through the standard interaction event.</li>
 <li><strong>Safe by design.</strong> Every stash is planned first and then applied with fresh checks, so items are never lost or duplicated, even when several players use the same chests.</li>
-<li><strong>Light on performance.</strong> Nothing runs in the background; work happens only when someone presses the key.</li>
+<li><strong>Light on performance.</strong> Nothing runs in the background; work only happens when someone presses a key.</li>
 <li><strong>Bigger stacks friendly.</strong> Stack limits come from the item and the container, never a fixed 64, so stack-size mods and data packs just work.</li>
-<li><strong>Configurable.</strong> <code>config/frame_stash.toml</code>, reloaded in game with <code>/framestash reload</code>. Add more container blocks with the block tag <code>frame_stash:containers</code>.</li>
+<li><strong>Configurable.</strong> Edit <code>config/frame_stash.toml</code>, then apply it in game with the <strong>Reload config</strong> button in the menu (operators only). Data packs can add more container blocks through the block tag <code>frame_stash:containers</code>.</li>
 </ul>
 <table>
 <thead>
@@ -182,7 +139,7 @@
 <tr>
 <td><code>commandPermissionLevel</code></td>
 <td>0</td>
-<td>Who can stash, restock and open the menu (0 = everyone)</td>
+<td>Who can stash, restock and open the menu (0 = everyone, 2 = operators only)</td>
 </tr>
 <tr>
 <td><code>skipBlockedChests</code></td>
@@ -203,8 +160,8 @@
 </table>
 <hr />
 <h2>FAQ</h2>
-<p><strong>Do I have to install it on my client?</strong>
-Only if you want the keybinds. The server does all the work. Without the client install you use <code>/stash</code>, <code>/restock</code> and <code>/framestash</code> instead.</p>
+<p><strong>Where do I install it?</strong>
+In your <code>mods</code> folder. For multiplayer, the world you join needs it too.</p>
 <p><strong>Will it put items in my locked or claimed chests?</strong>
 No. Anything you couldn't open yourself is skipped.</p>
 <p><strong>What are glow item frames for?</strong>

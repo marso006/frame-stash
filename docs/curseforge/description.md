@@ -68,7 +68,7 @@ A short summary on your action bar ("Stashed 705 items into 14 containers"), a p
 
 ![The Frame Stash menu](https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/5_menu.png)
 
-Open it with your menu key or `/framestash`:
+Open it with your **menu key** (set it once under Controls):
 
 - **Stash** and **Restock** buttons
 - **Nearby containers:** every labelled container around you, with its labels, how full it is, and a warning if it can't be used. Click one and a particle trail shows you the way.
@@ -78,31 +78,21 @@ Open it with your menu key or `/framestash`:
 
 ## Installing
 
-| Where | Needed? | What you get |
-| --- | --- | --- |
-| **Server** (or singleplayer) | **Required** | Stashing, restocking, the menu |
-| **Your client** | Recommended | The **G** and **H** keybinds |
+1. Drop Frame Stash into your `mods` folder. On Fabric, also add [Fabric API](https://modrinth.com/mod/fabric-api).
+2. Playing with friends? Add it to the multiplayer world's `mods` folder too.
+3. Start the game, hang some frames and press **G**.
 
-Fabric needs [Fabric API](https://modrinth.com/mod/fabric-api). NeoForge needs nothing else. Check the **Files** tab for the Minecraft versions each file supports.
-
-**Playing on a server where you don't have the mod installed?** Everything still works through commands and the menu:
-
-| Command | Same as |
-| --- | --- |
-| `/stash` | G |
-| `/restock` | H |
-| `/framestash` | Menu key |
-| `/framestash info` | Lists labelled containers nearby |
+Check the **Files** tab for the Minecraft versions and loaders each file supports.
 
 ---
 
-## For server owners
+## For multiplayer worlds
 
 - **Respects protection.** Locked chests, claimed or protected areas, spawn protection and chests blocked by a block on top are skipped. Fabric claim mods are asked through the bundled Common Protection API, NeoForge ones through the standard interaction event.
 - **Safe by design.** Every stash is planned first and then applied with fresh checks, so items are never lost or duplicated, even when several players use the same chests.
-- **Light on performance.** Nothing runs in the background; work happens only when someone presses the key.
+- **Light on performance.** Nothing runs in the background; work only happens when someone presses a key.
 - **Bigger stacks friendly.** Stack limits come from the item and the container, never a fixed 64, so stack-size mods and data packs just work.
-- **Configurable.** `config/frame_stash.toml`, reloaded in game with `/framestash reload`. Add more container blocks with the block tag `frame_stash:containers`.
+- **Configurable.** Edit `config/frame_stash.toml`, then apply it in game with the **Reload config** button in the menu (operators only). Data packs can add more container blocks through the block tag `frame_stash:containers`.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
@@ -114,7 +104,7 @@ Fabric needs [Fabric API](https://modrinth.com/mod/fabric-api). NeoForge needs n
 | `catchAllItem` | `"minecraft:hopper"` | Item that marks a catch-all. `""` turns it off |
 | `cooldownTicks` | 20 | Minimum time between stashes per player |
 | `particles`, `sound`, `actionBar` | true | Feedback toggles |
-| `commandPermissionLevel` | 0 | Who can stash, restock and open the menu (0 = everyone) |
+| `commandPermissionLevel` | 0 | Who can stash, restock and open the menu (0 = everyone, 2 = operators only) |
 | `skipBlockedChests` | true | Skip chests vanilla wouldn't open |
 | `protectionCheck` | true | Ask claim and protection mods before using a container |
 | `sneakGesture` | false | Sneak and right-click a labelled container with an empty hand to stash |
@@ -123,8 +113,8 @@ Fabric needs [Fabric API](https://modrinth.com/mod/fabric-api). NeoForge needs n
 
 ## FAQ
 
-**Do I have to install it on my client?**
-Only if you want the keybinds. The server does all the work. Without the client install you use `/stash`, `/restock` and `/framestash` instead.
+**Where do I install it?**
+In your `mods` folder. For multiplayer, the world you join needs it too.
 
 **Will it put items in my locked or claimed chests?**
 No. Anything you couldn't open yourself is skipped.
