@@ -37,6 +37,11 @@ public final class Compat {
         return source.hasPermission(level);
     }
 
+    /** Whether the container has a vanilla lock (the "lock" component). */
+    public static boolean isLocked(net.minecraft.world.level.block.entity.BaseContainerBlockEntity container) {
+        return container.isLocked();
+    }
+
     /** Plays a sound that only this player hears, at their position. */
     public static void playTo(ServerPlayer player, SoundEvent sound, float volume, float pitch) {
         playTo(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), volume, pitch);
