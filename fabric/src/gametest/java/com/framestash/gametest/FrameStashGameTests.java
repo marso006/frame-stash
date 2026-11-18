@@ -7,7 +7,7 @@ import com.framestash.config.FrameStashConfig;
 import com.framestash.gui.Menus;
 import com.framestash.gui.StashMenu;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;

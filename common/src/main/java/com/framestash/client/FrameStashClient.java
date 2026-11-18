@@ -12,7 +12,7 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Optional client side: keybinds for Stash, Restock and the menu. Only loaded by the loaders' client
@@ -23,7 +23,7 @@ import net.minecraft.resources.ResourceLocation;
  * clients, and the client part works on any server that has the mod.
  */
 public final class FrameStashClient {
-    public static final ResourceLocation CATEGORY_ID = ResourceLocation.fromNamespaceAndPath(FrameStashMod.MOD_ID, "main");
+    public static final Identifier CATEGORY_ID = com.framestash.compat.Compat.id("main");
     /** Ignore repeats faster than this many ticks; the server has its own cooldown too. */
     private static final int MIN_TICKS_BETWEEN_PRESSES = 5;
 

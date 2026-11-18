@@ -10,8 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import com.framestash.compat.Compat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -44,8 +43,7 @@ public final class FrameStashConfig {
         if (resolvedCatchAll == null) {
             resolvedCatchAll = Optional.empty();
             if (!catchAllItem.isBlank()) {
-                ResourceLocation id = ResourceLocation.tryParse(catchAllItem.trim());
-                Optional<Item> item = id == null ? Optional.empty() : BuiltInRegistries.ITEM.getOptional(id);
+                Optional<Item> item = Compat.item(catchAllItem.trim());
                 if (item.isEmpty() || item.get() == Items.AIR) {
                     FrameStashMod.LOGGER.warn("catchAllItem '{}' is not a known item; catch-all is disabled", catchAllItem);
                 } else {

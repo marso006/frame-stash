@@ -32,7 +32,7 @@ public final class FrameStashCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         Predicate<CommandSourceStack> canUse =
-                source -> source.hasPermission(FrameStashMod.config().commandPermissionLevel);
+                source -> com.framestash.compat.Compat.hasLevel(source, FrameStashMod.config().commandPermissionLevel);
 
         dispatcher.register(Commands.literal("stash")
                 .requires(canUse)
@@ -50,7 +50,7 @@ public final class FrameStashCommands {
                 })
                 .then(Commands.literal("info").executes(FrameStashCommands::info))
                 .then(Commands.literal("reload")
-                        .requires(source -> source.hasPermission(2))
+                        .requires(source -> com.framestash.compat.Compat.hasLevel(source, 2))
                         .executes(FrameStashCommands::reload)));
     }
 
