@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
  * The few calls that differ between Minecraft versions. Each version branch has its own copy of this
  * class; everything else in common is the same on every branch.
  *
- * <p>This copy: Minecraft 1.21.5 (ResourceLocation, integer permission levels, lock read from components).
+ * <p>This copy: Minecraft 1.21.2 - 1.21.4 (ResourceLocation, integer permission levels, lock read from components).
  */
 public final class Compat {
     private Compat() {}
@@ -49,6 +49,16 @@ public final class Compat {
     /** The server level the player is in. */
     public static net.minecraft.server.level.ServerLevel level(ServerPlayer player) {
         return player.serverLevel();
+    }
+
+    /** Hides an icon's own extra tooltip lines (enchantments, map ids, ...), keeping name and lore. */
+    public static void hideExtraTooltip(net.minecraft.world.item.ItemStack stack) {
+        stack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, net.minecraft.util.Unit.INSTANCE);
+    }
+
+    /** Hides an icon's tooltip completely (menu filler panes). */
+    public static void hideTooltip(net.minecraft.world.item.ItemStack stack) {
+        stack.set(DataComponents.HIDE_TOOLTIP, net.minecraft.util.Unit.INSTANCE);
     }
 
     /** Plays a sound that only this player hears, at their position. */

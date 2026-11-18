@@ -6,7 +6,8 @@ import com.framestash.action.Actions;
 import com.framestash.config.FrameStashConfig;
 import com.framestash.gui.Menus;
 import com.framestash.gui.StashMenu;
-import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +34,7 @@ import net.minecraft.world.phys.Vec3;
  * In-world checks for the roadmap's test plan: real chests, item frames, block entities and a mock
  * server player. Each test builds its setup in an empty 8x8x8 area, runs one action and asserts.
  */
-public class FrameStashGameTests {
+public class FrameStashGameTests implements FabricGameTest {
 
     // --- helpers -------------------------------------------------------------------------------
 
@@ -66,11 +67,11 @@ public class FrameStashGameTests {
     }
 
     private static void check(GameTestHelper h, boolean ok, String message) {
-        h.assertTrue(ok, Component.literal(message));
+        h.assertTrue(ok, message);
     }
 
     private static void eq(GameTestHelper h, long expected, long actual, String what) {
-        h.assertTrue(expected == actual, Component.literal(what + ": expected " + expected + " but was " + actual));
+        h.assertTrue(expected == actual, what + ": expected " + expected + " but was " + actual);
     }
 
     private static FrameStashConfig config() {
@@ -79,7 +80,7 @@ public class FrameStashGameTests {
 
     // --- core behaviour ------------------------------------------------------------------------
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void threeChestsEachGetTheirItem(GameTestHelper h) {
         BlockPos stone = new BlockPos(1, 1, 2), iron = new BlockPos(3, 1, 2), log = new BlockPos(5, 1, 2);
         for (BlockPos p : new BlockPos[] {stone, iron, log}) h.setBlock(p, Blocks.CHEST);
@@ -103,7 +104,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void frameOnOneHalfLabelsWholeDoubleChest(GameTestHelper h) {
         BlockPos left = new BlockPos(2, 1, 2), right = new BlockPos(3, 1, 2);
         h.setBlock(left, Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.NORTH)
@@ -124,7 +125,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void barrelAndShulkerBoxWork(GameTestHelper h) {
         BlockPos barrel = new BlockPos(2, 1, 2), shulker = new BlockPos(5, 1, 2);
         h.setBlock(barrel, Blocks.BARREL);
@@ -147,7 +148,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void glowFrameIsOverflowOnly(GameTestHelper h) {
         BlockPos primary = new BlockPos(1, 1, 2), overflow = new BlockPos(3, 1, 2);
         h.setBlock(primary, Blocks.CHEST);
@@ -169,7 +170,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void hopperFrameIsCatchAll(GameTestHelper h) {
         BlockPos bin = new BlockPos(2, 1, 2);
         h.setBlock(bin, Blocks.CHEST);
@@ -187,7 +188,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void restockTopsUpFromNearest(GameTestHelper h) {
         BlockPos near = new BlockPos(2, 1, 3), far = new BlockPos(6, 1, 1);
         h.setBlock(near, Blocks.CHEST);
@@ -212,7 +213,7 @@ public class FrameStashGameTests {
 
     // --- safety --------------------------------------------------------------------------------
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void lockedChestIsSkipped(GameTestHelper h) {
         BlockPos locked = new BlockPos(2, 1, 2);
         h.setBlock(locked, Blocks.CHEST);
@@ -231,7 +232,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void blockedChestIsSkipped(GameTestHelper h) {
         BlockPos blocked = new BlockPos(2, 1, 2), open = new BlockPos(5, 1, 2);
         h.setBlock(blocked, Blocks.CHEST);
@@ -251,7 +252,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void containerBeyondRadiusIsSkipped(GameTestHelper h) {
         BlockPos far = new BlockPos(1, 1, 1);
         h.setBlock(far, Blocks.CHEST);
@@ -270,7 +271,7 @@ public class FrameStashGameTests {
         h.succeed();
     }
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void removedFrameStopsLabelling(GameTestHelper h) {
         BlockPos pos = new BlockPos(2, 1, 2);
         h.setBlock(pos, Blocks.CHEST);
@@ -288,7 +289,7 @@ public class FrameStashGameTests {
 
     // --- menu ----------------------------------------------------------------------------------
 
-    @GameTest
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
     public void menuStashButtonWorksAndIconsCannotBeTaken(GameTestHelper h) {
         BlockPos pos = new BlockPos(2, 1, 2);
         h.setBlock(pos, Blocks.CHEST);
