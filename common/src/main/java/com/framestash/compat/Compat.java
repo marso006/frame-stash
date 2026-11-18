@@ -42,6 +42,11 @@ public final class Compat {
         return container.isLocked();
     }
 
+    /** The server level the player is in. */
+    public static net.minecraft.server.level.ServerLevel level(ServerPlayer player) {
+        return player.level();
+    }
+
     /** Plays a sound that only this player hears, at their position. */
     public static void playTo(ServerPlayer player, SoundEvent sound, float volume, float pitch) {
         playTo(player, BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), volume, pitch);
