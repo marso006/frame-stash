@@ -114,6 +114,24 @@ The first server run creates `run-server/eula.txt`. Set `eula=true` there to acc
 
 Release jars are named `frame-stash-<loader>-<minecraft>-<version>.jar`, for example `frame-stash-fabric-1.21.10-1.0.0.jar`.
 
+## Versions and branches
+
+Each branch builds one Fabric jar and one NeoForge jar for a range of Minecraft versions. Version
+differences live in `common/src/main/java/com/framestash/compat/Compat.java`. Everything else in
+`common` is the same on every branch, so a fix can be copied across with `git cherry-pick`.
+
+| Branch | Minecraft | Fabric | NeoForge | Tested |
+| --- | --- | --- | --- | --- |
+| `1.21.1` | 1.21 – 1.21.1 | yes | 1.21.1 | in-world tests on 1.21 and 1.21.1 |
+| `1.21.4` | 1.21.2 – 1.21.4 | yes | 1.21.4 | in-world tests on 1.21.2–1.21.4, keybinds on 1.21.4 |
+| `1.21.5` | 1.21.5 | yes | yes | in-world + keybinds |
+| `1.21.8` | 1.21.6 – 1.21.8 | yes | 1.21.8 | in-world tests on 1.21.6–1.21.8, keybinds on 1.21.8 |
+| `main` | 1.21.9 – 1.21.10 | yes | 1.21.10 | in-world tests on 1.21.9–1.21.10, keybinds on 1.21.10 |
+| `1.21.11` | 1.21.11 | yes | yes | in-world + keybinds |
+| `26.3` | 26.3 | yes | yes | in-world + keybinds (Java 25) |
+
+Build a branch with `git checkout <branch>` and `./gradlew build`. The 26.3 branch needs a JDK 25 to run Gradle.
+
 ## Licence
 
 MIT, see [LICENSE](LICENSE).

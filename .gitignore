@@ -20,3 +20,6 @@ Frame Stash — Roadmap.md
 
 # Run logs
 logs/
+
+# Collected release jars
+dist/
