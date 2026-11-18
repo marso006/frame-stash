@@ -26,7 +26,7 @@ public final class Feedback {
     public static void report(ServerPlayer player, Actions.Kind kind, ActionResult result, FrameStashConfig config) {
         Component message = Component.literal(summary(kind, result));
         if (config.actionBar) {
-            player.displayClientMessage(message, true);
+            com.framestash.compat.Compat.overlay(player, message);
         } else {
             player.sendSystemMessage(message);
         }

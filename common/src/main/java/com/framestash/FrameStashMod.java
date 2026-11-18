@@ -87,7 +87,7 @@ public final class FrameStashMod {
         }
         Actions.Outcome outcome = Actions.perform(player, Actions.Kind.STASH);
         if (outcome.failure() != null) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.literal(outcome.failure()), true);
+            com.framestash.compat.Compat.overlay(player, net.minecraft.network.chat.Component.literal(outcome.failure()));
         }
         return true;
     }
