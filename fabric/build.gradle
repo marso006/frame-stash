@@ -1,0 +1,57 @@
+plugins {
+    id 'fabric-loom'
+}
+
+def common = project(':common')
+
+sourceSets.main {
+    java.srcDir(common.file('src/main/java'))
+    resources.srcDir(common.file('src/main/resources'))
+}
+
+repositories {
+    maven { name = 'Nucleoid'; url = 'https://maven.nucleoid.xyz/' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    // Claim/protection mods on Fabric implement this; bundled (jar-in-jar) so users need nothing extra.
+    modImplementation include("eu.pb4:common-protection-api:${common_protection_api_version}")
+
+    // Unit tests boot Minecraft's registries through Fabric Loader's JUnit support.
+    testImplementation "net.fabricmc:fabric-loader-junit:${fabric_loader_version}"
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// In-world tests: `./gradlew :fabric:runGameTest` boots a game-test server with a dev-only test mod
+// (src/gametest) that builds chests, frames and a mock player, then checks the results.
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "frame_stash_gametest"
+        enableGameTests = true
+        // The client "test" is a scripted photo shoot for the mod page (ScreenshotShoot); it opens a window.
+        enableClientGameTests = true
+        eula = true // accepted by the project owner
+    }
+}
+
+loom {
+    runs {
+        client { ideConfigGenerated true }
+        server { ideConfigGenerated true; runDir 'run-server' }
+        matching { it.name == 'clientGameTest' }.configureEach {
+            vmArg "-Dframestash.shots=${rootProject.file('docs/raw').absolutePath}"
+        }
+    }
+}

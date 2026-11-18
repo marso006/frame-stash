@@ -1,0 +1,30 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+def common = project(':common')
+
+sourceSets.main {
+    java.srcDir(common.file('src/main/java'))
+    resources.srcDir(common.file('src/main/resources'))
+}
+
+neoForge {
+    version = neoforge_version
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            gameDirectory = project.file('run-server')
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}

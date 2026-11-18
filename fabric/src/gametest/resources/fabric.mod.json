@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "frame_stash_gametest",
+  "version": "1.0.0",
+  "name": "Frame Stash GameTests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": ["com.framestash.gametest.FrameStashGameTests"],
+    "fabric-client-gametest": ["com.framestash.gametest.ScreenshotShoot"]
+  },
+  "depends": {
+    "frame_stash": "*",
+    "fabric-gametest-api-v1": "*"
+  }
+}

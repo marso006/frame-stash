@@ -1,0 +1,184 @@
+<p><img alt="Frame Stash" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/banner.png" /></p>
+<p><strong>Label your chests with item frames. Put everything away with one command.</strong></p>
+<p>Frame Stash turns the item frames you already hang on your storage into real labels. Come home from a mining trip, type <code>/stash</code>, and every item in your inventory goes to the chest whose frame shows it. Need more torches? <code>/restock</code> tops your stacks back up from the same chests.</p>
+<p>It runs <strong>only on the server</strong>. Players join with an unmodded client and still get everything, including the menu.</p>
+<p><img alt="Frame Stash in action" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/demo.gif" /></p>
+<hr />
+<h2>How it works</h2>
+<p><img alt="How it works" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/0_how_it_works.png" /></p>
+<ol>
+<li><strong>Hang an item frame</strong> on a chest, trapped chest, barrel or placed shulker box.</li>
+<li><strong>Put an item in the frame.</strong> That item now lives in that container.</li>
+<li><strong>Type <code>/stash</code></strong> near your storage, or open the menu with <code>/framestash</code>.</li>
+</ol>
+<p>No new blocks, no new items, no setup. If you remove the mod, your frames and chests are still just frames and chests.</p>
+<hr />
+<h2>Features</h2>
+<h3>Label anything with a vanilla item frame</h3>
+<p><img alt="Labelled storage wall" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/1_labelled_wall.png" /></p>
+<ul>
+<li>One frame, one label. Put several frames on a container and it accepts all of those items.</li>
+<li>A frame on either half of a <strong>double chest</strong> labels the whole chest.</li>
+<li>Matching is by item type. Items only merge into identical stacks, so renamed or enchanted items never get mixed.</li>
+</ul>
+<h3>One command empties your inventory</h3>
+<p><img alt="Before and after /stash" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/2_before_after.png" /></p>
+<p>Items go to the <strong>nearest</strong> matching container first. Your <strong>hotbar, armour and offhand stay where they are</strong> unless you turn the hotbar on in the menu.</p>
+<h3>Instant feedback</h3>
+<p><img alt="Action bar and particle trail" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/3_feedback.png" /></p>
+<p>A short summary on the action bar ("Stashed 705 items into 14 containers"), a particle trail to every container that received something, and a soft sound. Each one can be turned off.</p>
+<h3>Overflow chains and a catch-all</h3>
+<p><img alt="Overflow into a glow-frame chest" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/4_overflow.png" /></p>
+<ul>
+<li><strong>Glow item frame = overflow.</strong> Once every normal-frame container for an item is full, items continue into glow-frame containers.</li>
+<li><strong>Hopper in a frame = catch-all.</strong> Anything with nowhere else to go ends up there. The marker item can be changed in the config.</li>
+</ul>
+<h3>Restock</h3>
+<p><code>/restock</code> tops up every partial stack in your hotbar and inventory from the containers labelled for that item, nearest first. Perfect for torches, food, building blocks and arrows.</p>
+<h3>A menu that works without a client mod</h3>
+<p><img alt="The Frame Stash menu" src="https://raw.githubusercontent.com/marso006/frame-stash/main/docs/images/5_menu.png" /></p>
+<p><code>/framestash</code> opens a menu built from a normal chest screen, so unmodded clients can use it:</p>
+<ul>
+<li><strong>Stash</strong> and <strong>Restock</strong> buttons</li>
+<li><strong>Nearby containers</strong>: every labelled container around you, with its labels, how full it is, and why it's skipped if it is. Click one to get a particle trail to it.</li>
+<li><strong>Your own settings</strong>: stash hotbar, sound and particles. They're saved per player.</li>
+<li><strong>Reload config</strong> button for operators</li>
+</ul>
+<hr />
+<h2>Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Default permission</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/stash</code></td>
+<td>everyone</td>
+<td>Put matching items away into labelled containers in range</td>
+</tr>
+<tr>
+<td><code>/restock</code></td>
+<td>everyone</td>
+<td>Top up partial stacks from labelled containers</td>
+</tr>
+<tr>
+<td><code>/framestash</code></td>
+<td>everyone</td>
+<td>Open the menu</td>
+</tr>
+<tr>
+<td><code>/framestash info</code></td>
+<td>everyone</td>
+<td>List labelled containers in range and what each accepts</td>
+</tr>
+<tr>
+<td><code>/framestash reload</code></td>
+<td>operators</td>
+<td>Reload the config</td>
+</tr>
+</tbody>
+</table>
+<p>Optional, off by default: <strong>sneak and right-click</strong> a labelled container with an empty hand to stash.</p>
+<h2>Configuration</h2>
+<p><code>config/frame_stash.toml</code> is created on first start. Run <code>/framestash reload</code> after editing.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>radius</code></td>
+<td>16</td>
+<td>How far to look for labelled containers (4 to 32 blocks)</td>
+</tr>
+<tr>
+<td><code>maxContainers</code></td>
+<td>64</td>
+<td>Most containers touched by one action</td>
+</tr>
+<tr>
+<td><code>includeHotbar</code></td>
+<td>false</td>
+<td>Default for whether <code>/stash</code> takes hotbar items (players can change their own in the menu)</td>
+</tr>
+<tr>
+<td><code>restockEnabled</code></td>
+<td>true</td>
+<td>Turns <code>/restock</code> on or off</td>
+</tr>
+<tr>
+<td><code>overflowEnabled</code></td>
+<td>true</td>
+<td>Glow frames mean overflow. When off, they act like normal frames</td>
+</tr>
+<tr>
+<td><code>catchAllItem</code></td>
+<td><code>"minecraft:hopper"</code></td>
+<td>Item that marks a catch-all. <code>""</code> turns it off</td>
+</tr>
+<tr>
+<td><code>cooldownTicks</code></td>
+<td>20</td>
+<td>Minimum time between actions per player</td>
+</tr>
+<tr>
+<td><code>particles</code>, <code>sound</code>, <code>actionBar</code></td>
+<td>true</td>
+<td>Feedback toggles</td>
+</tr>
+<tr>
+<td><code>commandPermissionLevel</code></td>
+<td>0</td>
+<td>Who can use <code>/stash</code>, <code>/restock</code> and the menu (0 = everyone)</td>
+</tr>
+<tr>
+<td><code>skipBlockedChests</code></td>
+<td>true</td>
+<td>Skip chests vanilla wouldn't open, for example with a block on top</td>
+</tr>
+<tr>
+<td><code>protectionCheck</code></td>
+<td>true</td>
+<td>Ask claim and protection mods before touching a container</td>
+</tr>
+<tr>
+<td><code>sneakGesture</code></td>
+<td>false</td>
+<td>Enable sneak + right-click to stash</td>
+</tr>
+</tbody>
+</table>
+<p>Server owners and modpack makers can add more container blocks through the block tag <code>frame_stash:containers</code>.</p>
+<hr />
+<h2>Compatibility</h2>
+<ul>
+<li><strong>Minecraft 1.21.10</strong> on <strong>Fabric</strong> (needs Fabric API) and <strong>NeoForge</strong></li>
+<li><strong>Server-side only.</strong> Install it on the server. Players don't need it. It also works in singleplayer.</li>
+<li><strong>Claim and protection mods:</strong> a container is skipped if you couldn't open it yourself. On Fabric this goes through the bundled Common Protection API; on NeoForge through the standard block-interaction event.</li>
+<li><strong>Locked containers, spawn protection and the world border</strong> are always respected.</li>
+<li><strong>Bigger stack mods:</strong> stack limits always come from the container and the item, never a fixed 64, so mods and data packs that raise stack sizes just work.</li>
+<li><strong>Safe by design:</strong> every action is planned first, then applied with fresh checks, so items are never lost or duplicated, even with two players stashing into the same chests.</li>
+</ul>
+<h2>FAQ</h2>
+<p><strong>Do players need to install anything?</strong>
+No. Everything, including the menu, works with an unmodded client.</p>
+<p><strong>Will it put things into my locked chests?</strong>
+No. Locked chests, chests with a block on top, protected chests and chests in unloaded chunks are skipped.</p>
+<p><strong>What are glow item frames for?</strong>
+Overflow. A glow-frame container is only used once every normal-frame container for that item is full.</p>
+<p><strong>Can I keep my tools out of the stash?</strong>
+Yes. The hotbar is never touched unless you turn it on, and only items with a labelled home (or a catch-all) move at all.</p>
+<p><strong>Does it sort the inside of my chests?</strong>
+No. Frame Stash moves items between your inventory and your containers. It doesn't rearrange what's already inside.</p>
+<p><strong>Can I use it in a modpack?</strong>
+Yes. Frame Stash is MIT licensed.</p>
+<hr />
+<p><a href="https://github.com/marso006/frame-stash">Source code</a> · <a href="https://github.com/marso006/frame-stash/issues">Report a bug</a> · MIT License</p>

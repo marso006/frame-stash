@@ -1,0 +1,9 @@
+// Loader-agnostic code compiled against vanilla Minecraft with Mojang mappings (via NeoForm).
+// The loader modules compile these sources into their own jars; this module just type-checks them.
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    neoFormVersion = neoform_version
+}

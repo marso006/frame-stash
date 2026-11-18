@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "Label chests with item frames, then quick stack, restock and overflow into them. Server-side; vanilla clients can join.",
+  "authors": ["${mod_author}"],
+  "license": "${mod_license}",
+  "icon": "assets/frame_stash/icon.png",
+  "contact": {
+    "sources": "https://github.com/marso006/frame-stash",
+    "issues": "https://github.com/marso006/frame-stash/issues"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.framestash.fabric.FrameStashFabric"]
+  },
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": ">=1.21.10 <1.21.11",
+    "java": ">=21"
+  }
+}

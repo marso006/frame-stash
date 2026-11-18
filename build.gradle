@@ -1,0 +1,45 @@
+plugins {
+    id 'fabric-loom' version '1.13.6' apply false
+    id 'net.neoforged.moddev' version '2.0.148' apply false
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group = mod_group
+    version = mod_version
+    // Produces frame-stash-<loader>-<minecraft>-<version>.jar
+    base.archivesName = "frame-stash-${project.name}-${minecraft_version}"
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+        withSourcesJar()
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = java_version as int
+        options.compilerArgs << '-Xlint:deprecation'
+    }
+
+    def expandProps = [
+            mod_id               : mod_id,
+            mod_name             : mod_name,
+            version              : mod_version,
+            mod_author           : mod_author,
+            mod_license          : mod_license,
+            minecraft_version    : minecraft_version,
+            fabric_loader_version: fabric_loader_version,
+            neoforge_version     : neoforge_version,
+    ]
+    tasks.named('processResources', ProcessResources) {
+        inputs.properties(expandProps)
+        filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
+            expand(expandProps)
+        }
+    }
+}
