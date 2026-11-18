@@ -48,7 +48,7 @@ public final class ContainerAccess {
 
         // Locked containers (vanilla "lock" component) are skipped: stashing never uses a key.
         for (BlockPos block : label.blocks()) {
-            if (level.getBlockEntity(block) instanceof BaseContainerBlockEntity be && be.isLocked()) {
+            if (level.getBlockEntity(block) instanceof BaseContainerBlockEntity be && com.framestash.compat.Compat.isLocked(be)) {
                 return denied(Denial.LOCKED);
             }
         }
