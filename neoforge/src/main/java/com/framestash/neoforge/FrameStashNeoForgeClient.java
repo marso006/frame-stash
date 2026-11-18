@@ -22,7 +22,7 @@ public final class FrameStashNeoForgeClient {
     }
 
     private static void onRegisterKeys(RegisterKeyMappingsEvent event) {
-        KeyMapping.Category category = new KeyMapping.Category(FrameStashClient.CATEGORY_ID);
+        KeyMapping.Category category = new KeyMapping.Category(com.framestash.compat.Compat.id("main"));
         event.registerCategory(category);
         FrameStashClient.createKeys(category).forEach(event::register);
     }
