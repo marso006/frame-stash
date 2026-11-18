@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import com.framestash.compat.Compat;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.decoration.GlowItemFrame;
@@ -29,7 +29,7 @@ import net.minecraft.world.phys.Vec3;
 public final class LabelScanner {
     /** Blocks that can be labelled. Data-driven so packs can extend it. */
     public static final TagKey<Block> CONTAINERS =
-            TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(FrameStashMod.MOD_ID, "containers"));
+            TagKey.create(Registries.BLOCK, Compat.id("containers"));
 
     /** Nearest first, then by position, so the order is the same every time. */
     public static final Comparator<LabelledContainer> ORDER = Comparator

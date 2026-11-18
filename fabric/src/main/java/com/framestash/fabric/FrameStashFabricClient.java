@@ -12,7 +12,7 @@ import net.minecraft.client.KeyMapping;
 public final class FrameStashFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        KeyMapping.Category category = KeyMapping.Category.register(FrameStashClient.CATEGORY_ID);
+        KeyMapping.Category category = KeyMapping.Category.register(com.framestash.compat.Compat.id("main"));
         FrameStashClient.createKeys(category).forEach(KeyBindingHelper::registerKeyBinding);
         ClientTickEvents.END_CLIENT_TICK.register(FrameStashClient::onClientTick);
         ScreenEvents.AFTER_INIT.register((client, screen, width, height) ->

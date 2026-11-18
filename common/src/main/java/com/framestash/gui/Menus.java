@@ -132,7 +132,7 @@ public final class Menus {
         menu.set(22, icon(Items.BARRIER, text("Close", ChatFormatting.RED), List.of()),
                 (m, type, button) -> m.player().closeContainer());
 
-        if (player.createCommandSourceStack().hasPermission(2)) {
+        if (com.framestash.compat.Compat.hasLevel(player.createCommandSourceStack(), 2)) {
             menu.set(26, icon(Items.COMPARATOR, text("Reload config", ChatFormatting.LIGHT_PURPLE), List.of(
                     line("Re-read frame_stash.toml."),
                     text("Operators only", ChatFormatting.DARK_GRAY))),
@@ -271,6 +271,6 @@ public final class Menus {
     }
 
     private static void click(ServerPlayer player) {
-        player.playNotifySound(SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.MASTER, 0.4f, 1.0f);
+        com.framestash.compat.Compat.playTo(player, SoundEvents.UI_BUTTON_CLICK, 0.4f, 1.0f);
     }
 }

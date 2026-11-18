@@ -42,7 +42,7 @@ public final class Feedback {
             }
         }
         if (PlayerPrefs.sound(player, config)) {
-            player.playNotifySound(SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.25f,
+            com.framestash.compat.Compat.playTo(player, SoundEvents.ITEM_PICKUP, 0.25f,
                     kind == Actions.Kind.STASH ? 1.4f : 1.1f);
         }
     }
