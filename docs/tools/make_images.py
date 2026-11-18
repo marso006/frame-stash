@@ -152,10 +152,16 @@ def banner():
         d.line((0, y, img.width, y), fill=(*DARK, min(200, a + 60)))
     img.paste(shade, (0, 0), shade)
     d = ImageDraw.Draw(img)
-    d.text((800, 230), "FRAME STASH", font=font(120), fill=WHITE, anchor="mm", stroke_width=5, stroke_fill=(0, 0, 0))
-    d.text((800, 320), "Label chests with item frames. Stash and restock in one command.",
-           font=font(36, bold=False), fill=SOFT, anchor="mm", stroke_width=2, stroke_fill=(0, 0, 0))
-    badge(img, "Server-side  ·  Vanilla clients welcome  ·  Fabric & NeoForge  ·  1.21.10", (800, 410), size=26)
+    d.text((800, 220), "FRAME STASH", font=font(120), fill=WHITE, anchor="mm", stroke_width=5, stroke_fill=(0, 0, 0))
+    # Subtitle on a dark panel so it stays readable over the busy frame wall.
+    sub = "Label chests with item frames. Press G to put everything away."
+    f = font(38)
+    tw = d.textlength(sub, font=f)
+    panel_img = Image.new("RGBA", (int(tw) + 70, 66), (0, 0, 0, 0))
+    ImageDraw.Draw(panel_img).rounded_rectangle((0, 0, panel_img.width - 1, 65), radius=18, fill=(*DARK, 225))
+    img.paste(panel_img, (800 - panel_img.width // 2, 318 - 33), panel_img)
+    d.text((800, 318), sub, font=f, fill=WHITE, anchor="mm")
+    badge(img, "Fabric & NeoForge  ·  G to stash  ·  H to restock", (800, 420), size=28)
     save(img, "banner.png")
 
 
@@ -177,10 +183,10 @@ def before_after():
     y = 200
     shadowed_paste(img, a, (70, y))
     shadowed_paste(img, b, (W - 70 - b.width, y))
-    arrow(img, 70 + a.width + 28, W - 70 - b.width - 28, y + a.height // 2, "/stash")
+    arrow(img, 70 + a.width + 28, W - 70 - b.width - 28, y + a.height // 2, "Press G")
     badge(img, "Before", (70 + a.width // 2, y + a.height + 45), color=(235, 235, 235))
     badge(img, "After: 705 items put away", (W - 70 - b.width // 2, y + b.height + 45))
-    title_bar(img, "One command empties your inventory",
+    title_bar(img, "One key empties your inventory",
               "Hotbar, armour and offhand stay put. Only items with a home move.", step=2)
     watermark(img)
     save(img, "2_before_after.png")
@@ -253,7 +259,7 @@ def how_it_works():
     title_bar(img, "How it works")
     steps = [("1", "Hang a frame", "on a chest, barrel or shulker box"),
              ("2", "Put an item in it", "that item now lives there"),
-             ("3", "Type /stash", "or use /framestash for the menu")]
+             ("3", "Press G", "everything goes home (or type /stash)")]
     d = ImageDraw.Draw(img)
     card_w, gap = 440, 40
     x = (W - (card_w * 3 + gap * 2)) // 2
@@ -286,7 +292,7 @@ def gif():
         f = RAW / "gif" / f"gif_{i:02d}.png"
         if f.exists():
             img = fit(Image.open(f).convert("RGB"), size)
-            frames.append(caption(img, "/stash")); durations.append(90)
+            frames.append(caption(img, "Press G")); durations.append(90)
     durations[-1] = 1400
     after = fit(raw("04_inventory_after"), size)
     frames.append(caption(after, "...everything is back in its labelled chest")); durations.append(2000)
