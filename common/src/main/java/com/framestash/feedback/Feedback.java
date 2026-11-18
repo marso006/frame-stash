@@ -33,7 +33,7 @@ public final class Feedback {
         if (result.items() == 0) return;
 
         if (PlayerPrefs.particles(player, config)) {
-            ServerLevel level = player.level();
+            ServerLevel level = com.framestash.compat.Compat.level(player);
             Vec3 from = Actions.origin(player);
             int trails = 0;
             for (LabelledContainer container : result.containers()) {
@@ -62,7 +62,7 @@ public final class Feedback {
 
     /** A particle trail from the player to one container, used by the menu's "show the way". */
     public static void highlight(ServerPlayer player, BlockPos pos) {
-        trail(player.level(), Actions.origin(player), Vec3.atCenterOf(pos));
+        trail(com.framestash.compat.Compat.level(player), Actions.origin(player), Vec3.atCenterOf(pos));
     }
 
     private static void trail(ServerLevel level, Vec3 from, Vec3 to) {

@@ -76,7 +76,7 @@ public final class Menus {
                     List.of(line("Turned off on this server"))), null);
         }
 
-        List<LabelledContainer> nearby = LabelScanner.scan(player.level(), Actions.origin(player), config);
+        List<LabelledContainer> nearby = LabelScanner.scan(com.framestash.compat.Compat.level(player), Actions.origin(player), config);
         long skipped = nearby.stream().filter(c -> !ContainerAccess.open(player, c, config).ok()).count();
         List<Component> nearbyLore = new ArrayList<>();
         nearbyLore.add(line(nearby.size() + " labelled container" + (nearby.size() == 1 ? "" : "s")
@@ -138,7 +138,7 @@ public final class Menus {
                     text("Operators only", ChatFormatting.DARK_GRAY))),
                     (m, type, button) -> {
                         try {
-                            FrameStashConfig.LoadResult result = FrameStashMod.reloadAndResync(m.player().level().getServer());
+                            FrameStashConfig.LoadResult result = FrameStashMod.reloadAndResync(com.framestash.compat.Compat.level(m.player()).getServer());
                             m.status = result.problems().isEmpty() ? "Config reloaded"
                                     : "Config reloaded with " + result.problems().size() + " problem(s), see /framestash reload";
                         } catch (IOException e) {
@@ -169,7 +169,7 @@ public final class Menus {
         return menu -> {
             ServerPlayer player = menu.player();
             FrameStashConfig config = FrameStashMod.config();
-            List<LabelledContainer> all = LabelScanner.scan(player.level(), Actions.origin(player), config);
+            List<LabelledContainer> all = LabelScanner.scan(com.framestash.compat.Compat.level(player), Actions.origin(player), config);
             int pages = Math.max(1, (all.size() + PER_PAGE - 1) / PER_PAGE);
             int page = Math.max(0, Math.min(requestedPage, pages - 1));
 
@@ -218,7 +218,7 @@ public final class Menus {
         BlockPos pos = container.pos();
         int distance = (int) Math.round(Math.sqrt(container.distanceSq()));
         MutableComponent name = Component.empty().withStyle(ChatFormatting.WHITE)
-                .append(player.level().getBlockState(pos).getBlock().getName())
+                .append(com.framestash.compat.Compat.level(player).getBlockState(pos).getBlock().getName())
                 .append(text(" - " + distance + "m", ChatFormatting.GRAY));
 
         List<Component> lore = new ArrayList<>();

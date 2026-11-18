@@ -68,7 +68,7 @@ public final class Actions {
 
     private static List<Target> targets(ServerPlayer player, FrameStashConfig config) {
         List<Target> targets = new ArrayList<>();
-        for (LabelledContainer label : LabelScanner.scan(player.level(), origin(player), config)) {
+        for (LabelledContainer label : LabelScanner.scan(com.framestash.compat.Compat.level(player), origin(player), config)) {
             ContainerAccess.Access access = ContainerAccess.open(player, label, config);
             if (access.ok()) targets.add(access.target());
         }

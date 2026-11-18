@@ -39,7 +39,7 @@ public final class ContainerAccess {
     }
 
     public static Access open(ServerPlayer player, LabelledContainer label, FrameStashConfig config) {
-        ServerLevel level = player.level();
+        ServerLevel level = com.framestash.compat.Compat.level(player);
         for (BlockPos block : label.blocks()) {
             if (!level.isLoaded(block)) return denied(Denial.UNLOADED);
         }

@@ -13,7 +13,7 @@ public final class ActionGuard {
 
     /** Records a use and returns true if the player's cooldown has passed. */
     public static boolean tryUse(ServerPlayer player, int cooldownTicks) {
-        int now = player.level().getServer().getTickCount();
+        int now = com.framestash.compat.Compat.level(player).getServer().getTickCount();
         Integer last = LAST_USE.get(player.getUUID());
         if (last != null && now - last < cooldownTicks && now >= last) {
             return false;
