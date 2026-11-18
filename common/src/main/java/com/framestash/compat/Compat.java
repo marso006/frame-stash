@@ -18,7 +18,7 @@ import net.minecraft.world.item.Item;
  * The few calls that differ between Minecraft versions. Each version branch has its own copy of this
  * class; everything else in common is the same on every branch.
  *
- * <p>This copy: Minecraft 1.21.11 (Identifier, permission sets).
+ * <p>This copy: Minecraft 26.3 (unobfuscated; Identifier, permission sets, overlay messages).
  */
 public final class Compat {
     private Compat() {}
@@ -72,6 +72,16 @@ public final class Compat {
     public static void hideTooltip(net.minecraft.world.item.ItemStack stack) {
         stack.set(DataComponents.TOOLTIP_DISPLAY,
                 new net.minecraft.world.item.component.TooltipDisplay(true, new java.util.LinkedHashSet<>()));
+    }
+
+    /** Shows a short message on the player's action bar. */
+    public static void overlay(net.minecraft.world.entity.player.Player player, net.minecraft.network.chat.Component message) {
+        player.sendOverlayMessage(message);
+    }
+
+    /** The item used for empty menu slots. */
+    public static Item fillerItem() {
+        return net.minecraft.world.item.Items.STAINED_GLASS_PANE.pick(net.minecraft.world.item.DyeColor.BLACK);
     }
 
     /** Plays a sound that only this player hears, at their position. */

@@ -31,7 +31,7 @@ public class KeybindClientTest implements FabricClientGameTest {
     @Override
     public void runTest(ClientGameTestContext context) {
         try (TestSingleplayerContext world = context.worldBuilder().create()) {
-            world.getClientWorld().waitForChunksRender();
+            world.getConnection().waitForChunksRender();
             world.getServer().runCommand("gamemode survival @a");
             world.getServer().runOnServer(KeybindClientTest::setup);
             context.waitTicks(10);

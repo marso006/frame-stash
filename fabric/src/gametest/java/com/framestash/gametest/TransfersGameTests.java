@@ -1,39 +1,51 @@
-package com.framestash.action;
+package com.framestash.gametest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.framestash.action.*;
+
 
 import com.framestash.label.LabelledContainer;
 import java.util.ArrayList;
+import java.util.Objects;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
-import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.Bootstrap;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 /** Planner and apply tests on plain inventories, including the item-totals test from the roadmap. */
-class TransfersTest {
+/**
+ * The planner tests from fabric/src/test, run inside the GameTest server: on 26.x item stacks need
+ * data components, which are only bound once a world's registries are loaded.
+ */
+public class TransfersGameTests {
+    private static void assertEquals(Object expected, Object actual) {
+        assertEquals(expected, actual, "values differ");
+    }
+
+    private static void assertEquals(Object expected, Object actual, String message) {
+        if (expected instanceof Number e && actual instanceof Number a ? e.longValue() != a.longValue() : !Objects.equals(expected, actual)) {
+            throw new AssertionError(message + ": expected " + expected + " but was " + actual);
+        }
+    }
+
+    private static void assertTrue(boolean condition) {
+        if (!condition) throw new AssertionError("expected true");
+    }
+
     private static final int[] MAIN = IntStream.range(9, 36).toArray();
     private static final int[] ALL = IntStream.range(0, 36).toArray();
 
-    @BeforeAll
-    static void bootstrap() {
-        SharedConstants.tryDetectVersion();
-        Bootstrap.bootStrap();
-    }
 
     // --- helpers -------------------------------------------------------------------------------
 
@@ -85,8 +97,7 @@ class TransfersTest {
 
     // --- core behaviour ------------------------------------------------------------------------
 
-    @Test
-    void threeChestsEachGetTheirItem() {
+    private void threeChestsEachGetTheirItem() {
         List<Target> targets = List.of(
                 target(1, Set.of(Items.STONE), Set.of(), false),
                 target(2, Set.of(Items.IRON_INGOT), Set.of(), false),
@@ -107,8 +118,7 @@ class TransfersTest {
         assertEquals(3, result.containers().size());
     }
 
-    @Test
-    void hotbarIsSkippedUnlessIncluded() {
+    private void hotbarIsSkippedUnlessIncluded() {
         List<Target> targets = List.of(target(1, Set.of(Items.STONE), Set.of(), false));
         SimpleContainer inv = player();
         inv.setItem(0, new ItemStack(Items.STONE, 10));
@@ -122,8 +132,7 @@ class TransfersTest {
         assertEquals(15, count(targets.get(0).container(), Items.STONE));
     }
 
-    @Test
-    void nearestPrimaryFillsFirst() {
+    private void nearestPrimaryFillsFirst() {
         Target near = target(1, Set.of(Items.STONE), Set.of(), false);
         Target far = target(5, Set.of(Items.STONE), Set.of(), false);
         SimpleContainer inv = player();
@@ -135,8 +144,7 @@ class TransfersTest {
         assertEquals(0, count(far.container(), Items.STONE));
     }
 
-    @Test
-    void overflowOnlyAfterEveryPrimaryIsFull() {
+    private void overflowOnlyAfterEveryPrimaryIsFull() {
         Target primaryFar = target(6, Set.of(Items.STONE), Set.of(), false);
         Target overflowNear = target(1, Set.of(), Set.of(Items.STONE), false);
         // Fill the primary except for 10 items of room.
@@ -151,8 +159,7 @@ class TransfersTest {
         assertEquals(54, count(overflowNear.container(), Items.STONE));
     }
 
-    @Test
-    void overflowDisabledTreatsGlowFramesAsPrimary() {
+    private void overflowDisabledTreatsGlowFramesAsPrimary() {
         Target overflowNear = target(1, Set.of(), Set.of(Items.STONE), false);
         Target primaryFar = target(6, Set.of(Items.STONE), Set.of(), false);
         SimpleContainer inv = player();
@@ -163,8 +170,7 @@ class TransfersTest {
         assertEquals(20, count(overflowNear.container(), Items.STONE));
     }
 
-    @Test
-    void catchAllTakesUnlabelledItems() {
+    private void catchAllTakesUnlabelledItems() {
         Target stone = target(1, Set.of(Items.STONE), Set.of(), false);
         Target bin = target(2, Set.of(), Set.of(), true);
         SimpleContainer inv = player();
@@ -180,8 +186,7 @@ class TransfersTest {
         assertEquals(1, count(bin.container(), Items.DIAMOND_SWORD));
     }
 
-    @Test
-    void shulkerBoxRefusesShulkerBoxes() {
+    private void shulkerBoxRefusesShulkerBoxes() {
         Target shulker = new Target(label(1, Set.of(Items.SHULKER_BOX, Items.STONE), Set.of(), false),
                 new SimpleContainer(27), true);
         SimpleContainer inv = player();
@@ -194,8 +199,7 @@ class TransfersTest {
         assertEquals(3, count(shulker.container(), Items.STONE));
     }
 
-    @Test
-    void stashMergesWithExistingStacksBeforeEmptySlots() {
+    private void stashMergesWithExistingStacksBeforeEmptySlots() {
         Target t = target(1, Set.of(Items.STONE), Set.of(), false);
         t.container().setItem(5, new ItemStack(Items.STONE, 54));
         SimpleContainer inv = player();
@@ -207,8 +211,7 @@ class TransfersTest {
         assertEquals(10, t.container().getItem(0).getCount());
     }
 
-    @Test
-    void renamedItemsDoNotMergeIntoPlainStacks() {
+    private void renamedItemsDoNotMergeIntoPlainStacks() {
         Target t = target(1, Set.of(Items.STONE), Set.of(), false);
         for (int i = 0; i < 27; i++) t.container().setItem(i, new ItemStack(Items.STONE, 50));
         SimpleContainer inv = player();
@@ -223,8 +226,7 @@ class TransfersTest {
 
     // --- restock -------------------------------------------------------------------------------
 
-    @Test
-    void restockTopsUpFromNearestMatchingContainer() {
+    private void restockTopsUpFromNearestMatchingContainer() {
         Target near = target(1, Set.of(Items.STONE), Set.of(), false);
         Target far = target(4, Set.of(Items.STONE), Set.of(), false);
         near.container().setItem(0, new ItemStack(Items.STONE, 30));
@@ -239,8 +241,7 @@ class TransfersTest {
         assertEquals(40, count(far.container(), Items.STONE));
     }
 
-    @Test
-    void restockDoesNothingWithoutMatch() {
+    private void restockDoesNothingWithoutMatch() {
         Target t = target(1, Set.of(Items.STONE), Set.of(), false);
         t.container().setItem(0, new ItemStack(Items.DIRT, 64)); // unlabelled item in the chest
         Target bin = target(2, Set.of(), Set.of(), true);
@@ -255,8 +256,7 @@ class TransfersTest {
         assertEquals(1, inv.getItem(0).getCount());
     }
 
-    @Test
-    void restockNeverMixesComponents() {
+    private void restockNeverMixesComponents() {
         Target t = target(1, Set.of(Items.STONE), Set.of(), false);
         ItemStack named = new ItemStack(Items.STONE, 64);
         named.set(DataComponents.CUSTOM_NAME, Component.literal("Special"));
@@ -272,8 +272,7 @@ class TransfersTest {
 
     // --- safety --------------------------------------------------------------------------------
 
-    @Test
-    void totalsMatchOverFiftyRandomRuns() {
+    private void totalsMatchOverFiftyRandomRuns() {
         Item[] pool = {Items.STONE, Items.IRON_INGOT, Items.OAK_LOG, Items.DIRT, Items.ENDER_PEARL,
                 Items.DIAMOND_SWORD, Items.SHULKER_BOX, Items.EGG, Items.COBBLESTONE};
         Random random = new Random(12345);
@@ -300,8 +299,7 @@ class TransfersTest {
         }
     }
 
-    @Test
-    void applyRevalidatesWhenSlotsChangeAfterPlanning() {
+    private void applyRevalidatesWhenSlotsChangeAfterPlanning() {
         Target t = target(1, Set.of(Items.STONE), Set.of(), false);
         SimpleContainer inv = player();
         inv.setItem(9, new ItemStack(Items.STONE, 40));
@@ -347,8 +345,7 @@ class TransfersTest {
         };
     }
 
-    @Test
-    void bigStackModLimitsAreUsedForStash() {
+    private void bigStackModLimitsAreUsedForStash() {
         Target t = new Target(label(1, Set.of(Items.STONE), Set.of(), false), big(27, 4096), false);
         SimpleContainer inv = big(36, 4096);
         inv.setItem(9, new ItemStack(Items.STONE, 3000));
@@ -362,8 +359,7 @@ class TransfersTest {
         assertEquals(before, totals(inv, List.of(t)));
     }
 
-    @Test
-    void bigStackModLimitsAreUsedForRestock() {
+    private void bigStackModLimitsAreUsedForRestock() {
         Target t = new Target(label(1, Set.of(Items.STONE), Set.of(), false), big(27, 4096), false);
         t.container().setItem(0, new ItemStack(Items.STONE, 4000));
         t.container().setItem(1, new ItemStack(Items.STONE, 1000));
@@ -376,8 +372,7 @@ class TransfersTest {
         assertEquals(914, count(t.container(), Items.STONE));
     }
 
-    @Test
-    void componentRaisedStackSizeIsRespected() {
+    private void componentRaisedStackSizeIsRespected() {
         // Data packs and some mods raise the max_stack_size component (vanilla allows up to 99).
         ItemStack pearls = new ItemStack(Items.ENDER_PEARL, 60);
         pearls.set(DataComponents.MAX_STACK_SIZE, 99);
@@ -393,8 +388,7 @@ class TransfersTest {
         assertEquals(11, t.container().getItem(1).getCount());
     }
 
-    @Test
-    void cappedStacksRespectContainerLimit() {
+    private void cappedStacksRespectContainerLimit() {
         SimpleContainer small = new SimpleContainer(3) {
             @Override
             public int getMaxStackSize() {
@@ -410,5 +404,113 @@ class TransfersTest {
         assertEquals(48, count(small, Items.STONE));
         assertEquals(16, inv.getItem(9).getCount());
         for (int i = 0; i < 3; i++) assertTrue(small.getItem(i).getCount() <= 16);
+    }
+
+    @GameTest
+    public void threeChestsEachGetTheirItem(GameTestHelper h) {
+        threeChestsEachGetTheirItem();
+        h.succeed();
+    }
+
+    @GameTest
+    public void hotbarIsSkippedUnlessIncluded(GameTestHelper h) {
+        hotbarIsSkippedUnlessIncluded();
+        h.succeed();
+    }
+
+    @GameTest
+    public void nearestPrimaryFillsFirst(GameTestHelper h) {
+        nearestPrimaryFillsFirst();
+        h.succeed();
+    }
+
+    @GameTest
+    public void overflowOnlyAfterEveryPrimaryIsFull(GameTestHelper h) {
+        overflowOnlyAfterEveryPrimaryIsFull();
+        h.succeed();
+    }
+
+    @GameTest
+    public void overflowDisabledTreatsGlowFramesAsPrimary(GameTestHelper h) {
+        overflowDisabledTreatsGlowFramesAsPrimary();
+        h.succeed();
+    }
+
+    @GameTest
+    public void catchAllTakesUnlabelledItems(GameTestHelper h) {
+        catchAllTakesUnlabelledItems();
+        h.succeed();
+    }
+
+    @GameTest
+    public void shulkerBoxRefusesShulkerBoxes(GameTestHelper h) {
+        shulkerBoxRefusesShulkerBoxes();
+        h.succeed();
+    }
+
+    @GameTest
+    public void stashMergesWithExistingStacksBeforeEmptySlots(GameTestHelper h) {
+        stashMergesWithExistingStacksBeforeEmptySlots();
+        h.succeed();
+    }
+
+    @GameTest
+    public void renamedItemsDoNotMergeIntoPlainStacks(GameTestHelper h) {
+        renamedItemsDoNotMergeIntoPlainStacks();
+        h.succeed();
+    }
+
+    @GameTest
+    public void restockTopsUpFromNearestMatchingContainer(GameTestHelper h) {
+        restockTopsUpFromNearestMatchingContainer();
+        h.succeed();
+    }
+
+    @GameTest
+    public void restockDoesNothingWithoutMatch(GameTestHelper h) {
+        restockDoesNothingWithoutMatch();
+        h.succeed();
+    }
+
+    @GameTest
+    public void restockNeverMixesComponents(GameTestHelper h) {
+        restockNeverMixesComponents();
+        h.succeed();
+    }
+
+    @GameTest
+    public void totalsMatchOverFiftyRandomRuns(GameTestHelper h) {
+        totalsMatchOverFiftyRandomRuns();
+        h.succeed();
+    }
+
+    @GameTest
+    public void applyRevalidatesWhenSlotsChangeAfterPlanning(GameTestHelper h) {
+        applyRevalidatesWhenSlotsChangeAfterPlanning();
+        h.succeed();
+    }
+
+    @GameTest
+    public void bigStackModLimitsAreUsedForStash(GameTestHelper h) {
+        bigStackModLimitsAreUsedForStash();
+        h.succeed();
+    }
+
+    @GameTest
+    public void bigStackModLimitsAreUsedForRestock(GameTestHelper h) {
+        bigStackModLimitsAreUsedForRestock();
+        h.succeed();
+    }
+
+    @GameTest
+    public void componentRaisedStackSizeIsRespected(GameTestHelper h) {
+        componentRaisedStackSizeIsRespected();
+        h.succeed();
+    }
+
+    @GameTest
+    public void cappedStacksRespectContainerLimit(GameTestHelper h) {
+        cappedStacksRespectContainerLimit();
+        h.succeed();
     }
 }

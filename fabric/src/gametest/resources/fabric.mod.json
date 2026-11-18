@@ -5,8 +5,8 @@
   "name": "Frame Stash GameTests",
   "environment": "*",
   "entrypoints": {
-    "fabric-gametest": ["com.framestash.gametest.FrameStashGameTests"],
-    "fabric-client-gametest": ["com.framestash.gametest.KeybindClientTest", "com.framestash.gametest.ScreenshotShoot"]
+    "fabric-gametest": ["com.framestash.gametest.FrameStashGameTests", "com.framestash.gametest.TransfersGameTests"],
+    "fabric-client-gametest": ["com.framestash.gametest.KeybindClientTest"]
   },
   "depends": {
     "frame_stash": "*",

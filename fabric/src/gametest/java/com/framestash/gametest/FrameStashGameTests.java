@@ -7,7 +7,7 @@ import com.framestash.config.FrameStashConfig;
 import com.framestash.gui.Menus;
 import com.framestash.gui.StashMenu;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -20,7 +20,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.decoration.GlowItemFrame;
 import net.minecraft.world.entity.decoration.ItemFrame;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -302,15 +302,15 @@ public class FrameStashGameTests {
 
         // Try to take an icon and to shift-click a player stack into the menu.
         ItemStack icon = menu.getSlot(15).getItem().copy();
-        menu.clicked(15, 0, ClickType.PICKUP, player);
+        menu.clicked(15, 0, ContainerInput.PICKUP, player);
         check(h, menu.getCarried().isEmpty(), "icon must not be picked up");
         check(h, ItemStack.matches(icon, menu.getSlot(15).getItem()), "icon must stay in place");
         int playerSlotInMenu = 27 + 0; // first main-inventory row (inventory slot 9)
-        menu.clicked(playerSlotInMenu, 0, ClickType.QUICK_MOVE, player);
+        menu.clicked(playerSlotInMenu, 0, ContainerInput.QUICK_MOVE, player);
         eq(h, 16, player.getInventory().getItem(9).getCount(), "shift-click must not move items");
 
         // Press Stash.
-        menu.clicked(10, 0, ClickType.PICKUP, player);
+        menu.clicked(10, 0, ContainerInput.PICKUP, player);
         eq(h, 16, count(chest(h, pos), Items.CLAY_BALL), "clay stashed from the menu");
         player.closeContainer();
         h.succeed();

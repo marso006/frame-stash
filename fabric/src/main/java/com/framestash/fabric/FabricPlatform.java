@@ -24,6 +24,6 @@ final class FabricPlatform implements Platform {
      */
     @Override
     public boolean canInteract(ServerPlayer player, BlockPos pos) {
-        return CommonProtection.canInteractBlock(player.level(), pos, player.getGameProfile(), player);
+        return CommonProtection.canInteractBlock(player.level(), pos, player.nameAndId(), player);
     }
 }

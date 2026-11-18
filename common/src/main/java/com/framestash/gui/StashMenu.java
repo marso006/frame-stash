@@ -9,7 +9,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +23,7 @@ public final class StashMenu extends ChestMenu {
     /** What a clickable icon does. */
     @FunctionalInterface
     public interface Button {
-        void click(StashMenu menu, ClickType type, int mouseButton);
+        void click(StashMenu menu, ContainerInput type, int mouseButton);
     }
 
     private final ServerPlayer player;
@@ -74,9 +74,9 @@ public final class StashMenu extends ChestMenu {
     }
 
     @Override
-    public void clicked(int slotId, int mouseButton, ClickType type, Player clicker) {
+    public void clicked(int slotId, int mouseButton, ContainerInput type, Player clicker) {
         if (slotId >= 0 && slotId < icons.getContainerSize()
-                && (type == ClickType.PICKUP || type == ClickType.QUICK_MOVE)) {
+                && (type == ContainerInput.PICKUP || type == ContainerInput.QUICK_MOVE)) {
             Button button = buttons.get(slotId);
             if (button != null) {
                 button.click(this, type, mouseButton);
