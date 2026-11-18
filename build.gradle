@@ -33,6 +33,8 @@ subprojects {
             mod_author           : mod_author,
             mod_license          : mod_license,
             minecraft_version    : minecraft_version,
+            fabric_mc_range      : fabric_mc_range,
+            neoforge_mc_range    : neoforge_mc_range,
             fabric_loader_version: fabric_loader_version,
             neoforge_version     : neoforge_version,
     ]
